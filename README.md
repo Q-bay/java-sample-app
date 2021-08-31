@@ -1,2 +1,3 @@
 # java-sample-app
-Javaで(画面がある)サンプルアプリを作る予定
+## sample1
+API Dynamoとの接続とかやってみる予定
