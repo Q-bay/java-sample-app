@@ -1,0 +1,23 @@
+version: '3'
+services:
+  sample1:
+    build:
+      context: ./sample_app1/
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env/env_file
+    ports:
+      - "8080:8080"
+    networks: 
+      - test-network
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports: 
+      - "8000:8000"
+    command: -jar DynamoDBLocal.jar -sharedDb -dbPath /tmp
+    networks: 
+      - test-network
+networks: 
+  test-network:
+    external: true
+    
