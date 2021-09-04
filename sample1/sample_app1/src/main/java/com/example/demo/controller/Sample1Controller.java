@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.controller.model.response.HogeResponse;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("/api/users")
 public class Sample1Controller {
 	
 	@GetMapping
