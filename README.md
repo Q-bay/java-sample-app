@@ -8,4 +8,7 @@ API Dynamoとの接続とかやってみる予定
 docker network create test-network
 
 #### キャッシュ使用しないでビルド
- docker-compose build --no-cache
+docker-compose build --no-cache
+
+#### 起動
+docker-compose up
