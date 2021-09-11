@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class HogeResponse {
 	
-	Integer id;
+	String id;
 	
 	String name;
 	

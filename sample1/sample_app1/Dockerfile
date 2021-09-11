@@ -1,4 +1,3 @@
-# マルチステージビルド
 FROM maven:3.8.2-jdk-8 as builder
 COPY . /usr/src/
 WORKDIR /usr/src/
