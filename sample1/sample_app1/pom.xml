@@ -47,6 +47,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+    		<groupId>com.amazonaws</groupId>
+    		<artifactId>aws-java-sdk-dynamodb</artifactId>
+    		<version>1.12.65</version>
+		</dependency>
 	</dependencies>
 
 	<build>
