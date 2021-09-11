@@ -8,7 +8,7 @@ import lombok.Data;
 
 @DynamoDBTable(tableName = "hoge")
 @Data
-public class Hoge {
+public class HogeEntity {
 
 	@DynamoDBHashKey
 	private String id;
