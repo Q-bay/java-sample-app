@@ -18,7 +18,9 @@ import com.example.demo.controller.model.response.HogeResponse;
 import com.example.demo.domain.model.FindHogeInput;
 import com.example.demo.domain.model.FindHogeOutput;
 import com.example.demo.domain.model.InsertHogeInput;
-import com.example.demo.service.HogeService;
+import com.example.demo.domain.model.InsertHogeOutput;
+import com.example.demo.domain.service.HogeService;
+import com.example.demo.repository.entity.HogeEntity;
 
 @RestController
 @RequestMapping("/api/users")
@@ -32,10 +34,12 @@ public class Sample1Controller {
 		
 		FindHogeInput findHogeInput = new FindHogeInput(id);
 		
-		FindHogeOutput findHoge = hogeService.findHoge(findHogeInput);
-		return new ResponseEntity<>(hoge, new HttpHeaders(), HttpStatus.OK);
+		FindHogeOutput findHogeOutput = hogeService.findHoge(findHogeInput);
+		
+		return new ResponseEntity<>(this.setHogeResponse(findHogeOutput.getHogeEntity()), new HttpHeaders(), HttpStatus.OK);
 		
 	}
+	
 	
 	@PostMapping
 	public ResponseEntity<HogeResponse> postHoge(
@@ -52,6 +56,14 @@ public class Sample1Controller {
 				hogeRequest.getName());
 		
 		InsertHogeOutput insertHogeOutput = hogeService.insertHoge(insertHogeInput);
+		
+		return new ResponseEntity<>(this.setHogeResponse(insertHogeOutput.getHogeEntity()), new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	
+	private HogeResponse setHogeResponse(HogeEntity hogeEntity) {
+		
+		return new HogeResponse(hogeEntity.getId(), hogeEntity.getName());
 		
 	}
 }

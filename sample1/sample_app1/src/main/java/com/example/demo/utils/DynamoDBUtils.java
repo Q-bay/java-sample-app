@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class DynamoDBUtils {
-	
+		
 	public static DynamoDBMapper getDynamoDBClient() {
 
 		String region = "";

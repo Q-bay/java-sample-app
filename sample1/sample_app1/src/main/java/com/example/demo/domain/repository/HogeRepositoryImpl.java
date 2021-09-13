@@ -20,8 +20,9 @@ public class HogeRepositoryImpl implements HogeRepository{
 		return client.load(HogeEntity.class, id);
 	}
 	
-	public void insert(HogeEntity hoge) {
+	public HogeEntity insert(HogeEntity hoge) {
 		client.save(hoge);
+		return client.load(HogeEntity.class, hoge.getId());
 	}
 	
 }

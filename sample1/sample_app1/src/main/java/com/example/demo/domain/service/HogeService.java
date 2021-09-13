@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.domain.service;
 
 import com.example.demo.domain.model.FindHogeInput;
 import com.example.demo.domain.model.FindHogeOutput;
