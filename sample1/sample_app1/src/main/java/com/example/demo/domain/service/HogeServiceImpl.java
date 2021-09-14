@@ -31,7 +31,7 @@ public class HogeServiceImpl implements HogeService {
 	@Override
 	public InsertHogeOutput insertHoge(@NonNull InsertHogeInput insertHogeInput) {
 		
-		HogeEntity hogeEntity = hogeRepository.findById(insertHogeInput.getId());
+		HogeEntity hogeEntity = hogeRepository.insert(insertHogeInput.getHogeEntity());
 		InsertHogeOutput insertHogeOutput = new InsertHogeOutput(hogeEntity);
 		
 		return insertHogeOutput;

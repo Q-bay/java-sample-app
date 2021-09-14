@@ -40,6 +40,15 @@ public class Sample1Controller {
 		
 	}
 	
+	@GetMapping(value = "/test")
+	public ResponseEntity<HogeResponse> getTest(){
+		
+		HogeResponse hogeResponse = new HogeResponse("1", "fuga");
+		
+		return new ResponseEntity<>(hogeResponse, new HttpHeaders(), HttpStatus.OK);
+		
+	}
+	
 	
 	@PostMapping
 	public ResponseEntity<HogeResponse> postHoge(
@@ -52,8 +61,7 @@ public class Sample1Controller {
 		}
 		
 		InsertHogeInput insertHogeInput = new InsertHogeInput(
-				hogeRequest.getId(), 
-				hogeRequest.getName());
+				new HogeEntity(hogeRequest.getId(), hogeRequest.getName()));
 		
 		InsertHogeOutput insertHogeOutput = hogeService.insertHoge(insertHogeInput);
 		
