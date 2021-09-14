@@ -1,1 +1,13 @@
-
+spring:
+  properties:
+    active: default
+    
+server:
+  port:
+  
+aws:
+  dynamodb:
+    endpoint:
+    region:
+    
+      
