@@ -4,7 +4,7 @@ import com.example.demo.repository.entity.HogeEntity;
 
 public interface HogeRepository {
 
-	HogeEntity insert(HogeEntity hoge);
+	void insert(HogeEntity hoge);
 	
 	HogeEntity findById(String id);
 }

@@ -1,23 +1,41 @@
 package com.example.demo.domain.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.example.demo.repository.entity.HogeEntity;
 import com.example.demo.utils.DynamoDBUtils;
 
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
+import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
+import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+
+
 @Repository
 public class HogeRepositoryImpl implements HogeRepository{
+
+	@Autowired
+	DynamoDBUtils dynamoDBUtils;
 		
-	DynamoDBMapper client = DynamoDBUtils.getDynamoDBClient();
+	DynamoDbEnhancedClient dynamoDbEnhancedClient = dynamoDBUtils.getDynamoDBClient();
+	
+	private final DynamoDbTable<HogeEntity> hogeTable 
+		= dynamoDbEnhancedClient.table("hoge", TableSchema.fromBean(HogeEntity.class));
 	
 	public HogeEntity findById(String id) {
-		return client.load(HogeEntity.class, id);
+		
+		 Key key = Key.builder()
+                 .partitionValue(id)
+                 .build();
+		 
+		 return hogeTable.getItem(r->r.key(key));
 	}
 	
-	public HogeEntity insert(HogeEntity hoge) {
-		client.save(hoge);
-		return client.load(HogeEntity.class, hoge.getId());
+	public void insert(HogeEntity hogeEntity) {
+		hogeTable.putItem(hogeEntity);
 	}
 	
 }
