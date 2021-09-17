@@ -12,5 +12,8 @@ public class HogeRequest {
 	
 	@JsonProperty	
 	private String name;
+	
+	@JsonProperty	
+	private String description;
 
 }

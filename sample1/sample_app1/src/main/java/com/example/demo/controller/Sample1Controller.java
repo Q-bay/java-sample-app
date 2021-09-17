@@ -61,7 +61,7 @@ public class Sample1Controller {
 		}
 		
 		InsertHogeInput insertHogeInput = new InsertHogeInput(
-				new HogeEntity(hogeRequest.getId(), hogeRequest.getName()));
+				new HogeEntity(hogeRequest.getId(), hogeRequest.getName(), hogeRequest.getDescription()));
 		
 		InsertHogeOutput insertHogeOutput = hogeService.insertHoge(insertHogeInput);
 		

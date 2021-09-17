@@ -1,6 +1,7 @@
 package com.example.demo.domain.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 
@@ -17,13 +18,20 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 @Repository
 public class HogeRepositoryImpl implements HogeRepository{
 
-	@Autowired
-	DynamoDBUtils dynamoDBUtils;
-		
-	DynamoDbEnhancedClient dynamoDbEnhancedClient = dynamoDBUtils.getDynamoDBClient();
+	private final DynamoDbTable<HogeEntity> hogeTable;
 	
-	private final DynamoDbTable<HogeEntity> hogeTable 
-		= dynamoDbEnhancedClient.table("hoge", TableSchema.fromBean(HogeEntity.class));
+	@Autowired
+	public HogeRepositoryImpl(DynamoDBUtils dynamoDBUtils,
+			@Value("${aws.dynamodb.endpoint}") String endpoint,		
+			@Value("${aws.dynamodb.region}") String region) {
+		
+		System.out.println(endpoint + " : " + region);
+		
+		DynamoDbEnhancedClient dynamoDbEnhancedClient
+			= dynamoDBUtils.getDynamoDBClient(endpoint, region);
+		
+		hogeTable = dynamoDbEnhancedClient.table("Hoge", TableSchema.fromBean(HogeEntity.class));
+	}
 	
 	public HogeEntity findById(String id) {
 		

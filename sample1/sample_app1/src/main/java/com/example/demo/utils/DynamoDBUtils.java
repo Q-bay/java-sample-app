@@ -17,18 +17,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DynamoDBUtils {
-
-	@Value("${aws.dynamodb.endpoint}")
-	String endpoint;
-	
-	@Value("${aws.dynamodb.region}")
-	String region;
 			
-	private DynamoDbClient getDynamoDbClient() {
+	private DynamoDbClient getDynamoDbClient(String endpoint, String region) {
+		
+		System.out.println(endpoint + " : " + region);
 
 		DynamoDbClientBuilder dynamoDbClientBuilder = DynamoDbClient.builder()
-				.endpointOverride(URI.create(endpoint))
-				.region(Region.of(region));		
+				.region(Region.of(region))
+				.endpointOverride(URI.create(endpoint));		
 
 		return dynamoDbClientBuilder
 				.credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
@@ -36,11 +32,11 @@ public class DynamoDBUtils {
 	}
 		
 	
-	public DynamoDbEnhancedClient getDynamoDBClient() {
+	public DynamoDbEnhancedClient getDynamoDBClient(String endpoint, String region) {
 		
 		DynamoDbEnhancedClient enhancedClient = 
 			    DynamoDbEnhancedClient.builder()
-			                          .dynamoDbClient(getDynamoDbClient())
+			                          .dynamoDbClient(getDynamoDbClient(endpoint, region))
 			                          .build();
 		
 		return enhancedClient;
