@@ -1,6 +1,6 @@
 # java-sample-app
 ## sample1
-API Dynamoとの接続とかやってみる予定
+API DynamoをしたりするサンプルAPI
 
 ### 実行コマンド
 
