@@ -1,6 +1,6 @@
 # java-sample-app
 ## sample1
-API Dynamoへの登録・検索をするサンプルAPI
+Dynamoへの登録・検索をするサンプルAPI
 
 ### 実行コマンド
 
