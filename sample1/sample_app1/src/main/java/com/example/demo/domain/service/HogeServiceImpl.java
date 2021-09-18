@@ -1,8 +1,11 @@
 package com.example.demo.domain.service;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.services.kms.model.NotFoundException;
 import com.example.demo.domain.model.FindHogeInput;
 import com.example.demo.domain.model.FindHogeOutput;
 import com.example.demo.domain.model.InsertHogeInput;
@@ -19,9 +22,9 @@ public class HogeServiceImpl implements HogeService {
 	HogeRepository hogeRepository;
 	
 	@Override
-	public FindHogeOutput findHoge(@NonNull FindHogeInput findHogeInput) {
+	public FindHogeOutput findHoge(@NonNull FindHogeInput findHogeInput) throws NotFoundException {
 				
-		HogeEntity hogeEntity = hogeRepository.findById(findHogeInput.getId());
+		HogeEntity hogeEntity = hogeRepository.findById(findHogeInput.getId(), findHogeInput.getName());
 		
 		FindHogeOutput findHogeOutput = new FindHogeOutput(hogeEntity);
 		

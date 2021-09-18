@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controller.model.request.HogeRequest;
@@ -29,21 +32,29 @@ public class Sample1Controller {
 	@Autowired
 	HogeService hogeService;
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<HogeResponse> getHoge(@PathVariable("id") String id){
+	@GetMapping
+	public ResponseEntity<HogeResponse> getHoge(
+			@RequestParam(name = "id") String id,
+			@RequestParam(name = "name") String name){
 		
-		FindHogeInput findHogeInput = new FindHogeInput(id);
+		if(Objects.isNull(id) || Objects.isNull(name)) {
+			return new ResponseEntity<>(this.setHogeResponse(new HogeEntity(), HttpStatus.BAD_REQUEST) , new HttpHeaders(), HttpStatus.OK);
+		}
+		
+		FindHogeInput findHogeInput = new FindHogeInput(id, name);
 		
 		FindHogeOutput findHogeOutput = hogeService.findHoge(findHogeInput);
-		
-		return new ResponseEntity<>(this.setHogeResponse(findHogeOutput.getHogeEntity()), new HttpHeaders(), HttpStatus.OK);
+
+		return new ResponseEntity<>(this.setHogeResponse(findHogeOutput.getHogeEntity(), HttpStatus.OK), new HttpHeaders(), HttpStatus.OK);
 		
 	}
 	
 	@GetMapping(value = "/test")
 	public ResponseEntity<HogeResponse> getTest(){
 		
-		HogeResponse hogeResponse = new HogeResponse("1", "fuga");
+		HogeEntity hogeEntity = new HogeEntity("1", "hoge", "fuga");
+		
+		HogeResponse hogeResponse = new HogeResponse(hogeEntity, HttpStatus.OK);
 		
 		return new ResponseEntity<>(hogeResponse, new HttpHeaders(), HttpStatus.OK);
 		
@@ -65,13 +76,13 @@ public class Sample1Controller {
 		
 		InsertHogeOutput insertHogeOutput = hogeService.insertHoge(insertHogeInput);
 		
-		return new ResponseEntity<>(this.setHogeResponse(insertHogeOutput.getHogeEntity()), new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<>(this.setHogeResponse(insertHogeOutput.getHogeEntity(), HttpStatus.BAD_REQUEST), new HttpHeaders(), HttpStatus.OK);
 	}
 	
 	
-	private HogeResponse setHogeResponse(HogeEntity hogeEntity) {
+	private HogeResponse setHogeResponse(HogeEntity hogeEntity, HttpStatus statusCode) {
 		
-		return new HogeResponse(hogeEntity.getId(), hogeEntity.getName());
+		return new HogeResponse(hogeEntity, statusCode);
 		
 	}
 }

@@ -6,5 +6,5 @@ public interface HogeRepository {
 
 	void insert(HogeEntity hoge);
 	
-	HogeEntity findById(String id);
+	HogeEntity findById(String id, String name);
 }

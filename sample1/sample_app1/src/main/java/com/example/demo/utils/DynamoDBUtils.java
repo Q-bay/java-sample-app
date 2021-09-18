@@ -1,5 +1,6 @@
 package com.example.demo.utils;
 
+import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -18,29 +19,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class DynamoDBUtils {
 			
-	private DynamoDbClient getDynamoDbClient(String endpoint, String region) {
-		
-		System.out.println(endpoint + " : " + region);
-
-		DynamoDbClientBuilder dynamoDbClientBuilder = DynamoDbClient.builder()
-				.region(Region.of(region))
-				.endpointOverride(URI.create(endpoint));		
-
-		return dynamoDbClientBuilder
-				.credentialsProvider(WebIdentityTokenFileCredentialsProvider.create())
-				.build();
-	}
-		
+	@Value("${aws.dynamodb.endpoint}") 
+	String endpoint;
 	
-	public DynamoDbEnhancedClient getDynamoDBClient(String endpoint, String region) {
-		
-		DynamoDbEnhancedClient enhancedClient = 
-			    DynamoDbEnhancedClient.builder()
-			                          .dynamoDbClient(getDynamoDbClient(endpoint, region))
-			                          .build();
-		
-		return enhancedClient;
+	@Value("${aws.dynamodb.region}") 
+	String region;	
+	
+	private AmazonDynamoDB getAmazonDynamoDB(String endpoint, String region) {
+				
+		EndpointConfiguration endpointConfiguration = new EndpointConfiguration(endpoint, region);
+				
+		return AmazonDynamoDBClientBuilder.standard()
+                .withEndpointConfiguration(endpointConfiguration)
+                .build();
 	}
 	
+	public DynamoDBMapper getDynamoDBMapper() {
+		return new DynamoDBMapper(this.getAmazonDynamoDB(endpoint, region));
+	}
 
 }

@@ -1,5 +1,9 @@
 package com.example.demo.controller.model.response;
 
+import org.springframework.http.HttpStatus;
+
+import com.example.demo.repository.entity.HogeEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -7,8 +11,8 @@ import lombok.Data;
 @Data
 public class HogeResponse {
 	
-	private String id;
+	private HogeEntity hogeEntity;
 	
-	private String name;
+	private HttpStatus statusCode;
 	
 }
