@@ -7,4 +7,3 @@ spring:
     database: POSTGRESQL
 hoge:
   fuga: hogemeru
-
