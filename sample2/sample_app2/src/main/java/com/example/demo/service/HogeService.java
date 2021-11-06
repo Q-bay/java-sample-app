@@ -8,4 +8,6 @@ public interface HogeService {
 
 	public HogeOutput getHoge();
 	
+	public HogeOutput getHoge2();
+	
 }

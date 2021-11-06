@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.SampleConfig;
@@ -62,4 +63,14 @@ public class HomeController {
 		hogeResponse.setHogeList(hogeOutput.getHogeEntityList());
 		return hogeResponse;
 	} 
+	
+	@GetMapping("/get2")
+	public HogeResponse getHogeResponse2(@RequestParam("name") String name) {
+		System.out.println("1");
+		System.out.println(sampleConfig.getFuga());
+		HogeResponse hogeResponse = new HogeResponse();
+		HogeOutput hogeOutput = hogeService.getHoge();
+		hogeResponse.setHogeList(hogeOutput.getHogeEntityList());
+		return hogeResponse;
+	}
 }

@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/
+    username: postgres
+    password: Quality0610
+  jpa:
+    database: POSTGRESQL
+hoge:
+  fuga: hogemeru
+

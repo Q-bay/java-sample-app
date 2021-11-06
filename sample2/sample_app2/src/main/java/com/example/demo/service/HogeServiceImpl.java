@@ -16,4 +16,9 @@ public class HogeServiceImpl implements HogeService{
 		System.out.println("2222222222222222");
 		return new HogeOutput(hogeMapper.selectHoge());
 	}
+	
+	public HogeOutput getHoge2() {
+		System.out.println("2222222222222222");
+		return new HogeOutput(hogeMapper.selectHoge());
+	}
 }

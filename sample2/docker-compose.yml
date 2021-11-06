@@ -1,0 +1,24 @@
+version: '3'
+services:
+  sample1:
+    build:
+      context: ./sample_app2/
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env/sample_app2_env_file
+    ports:
+      - "8080:8080"
+    networks: 
+      - test-network2
+  postgres:
+    image: postgres:13.1
+    ports: 
+      - "5432:5432"
+    env_file:
+      - ./.env/postgres_env_file
+    networks: 
+      - test-network2
+networks: 
+  test-network2:
+    external: true
+    

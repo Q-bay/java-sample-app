@@ -1,16 +1,3 @@
 spring:
   profiles:
-    active: default
-  datasource:
-    url: jdbc:postgresql://localhost:5432/
-    username: postgres
-    password: Quality0610
-  jpa:
-    database: POSTGRESQL
-hoge:
-  fuga: hogemeru
-
-#spring.jpa.database=POSTGRESQL
-#spring.datasource.url=jdbc:postgresql://localhost:5432/testdb
-#spring.datasource.username=postgres
-#spring.datasource.password=postgrespassword
+    active: ${APPLICATION_ENV:local}
