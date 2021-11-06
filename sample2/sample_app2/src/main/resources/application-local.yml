@@ -5,5 +5,8 @@ spring:
     password: Quality0610
   jpa:
     database: POSTGRESQL
+mybatis:
+  configuration: 
+    map-underscore-to-camel-case: true
 hoge:
   fuga: hogemeru

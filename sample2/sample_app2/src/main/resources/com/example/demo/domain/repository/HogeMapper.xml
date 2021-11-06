@@ -11,4 +11,21 @@
         FROM
             hoge
     </select>
+    
+    <select id="selectBuildings" resultType="map">
+        SELECT
+			building_id,
+			building_name,
+			building_detail
+        FROM
+            building
+    </select>
+    
+    <select id="selectRooms" resultType="map">
+        SELECT
+			room_id,
+			room_name
+        FROM
+            room
+    </select>
 </mapper>

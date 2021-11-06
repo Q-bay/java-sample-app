@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.config.SampleConfig;
+import com.example.demo.domain.CheckDbPerformanceResponse;
 import com.example.demo.domain.HogeResponse;
+import com.example.demo.domain.model.CheckSelectPerformanceOutput;
 import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.HogeEntity;
 import com.example.demo.service.HogeService;
@@ -25,24 +27,15 @@ import com.example.demo.service.HogeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/a")
-public class HomeController {
+@RequestMapping("/sample2")
+public class Sample2Controller {
 
 	@Autowired
 	HogeService hogeService;
 	
 	@Autowired
 	SampleConfig sampleConfig;
-	
-//	@GetMapping("/home")
-//	public String getHome(Model model, @AuthenticationPrincipal User user) {
-//		
-//		log.info("HomeController start.");
-//		log.info(user.toString());
-//		log.info("HomeController end.");
-//		return "home";
-//	}
-	
+		
 	@GetMapping
 	public ResponseEntity<HogeResponse> getHogeResponsess() {
 		System.out.println("0");
@@ -53,24 +46,14 @@ public class HomeController {
 	} 
 	
 	
-	
-	@GetMapping("/get")
-	public HogeResponse getHogeResponse() {
-		System.out.println("1");
-		System.out.println(sampleConfig.getFuga());
-		HogeResponse hogeResponse = new HogeResponse();
-		HogeOutput hogeOutput = hogeService.getHoge();
-		hogeResponse.setHogeList(hogeOutput.getHogeEntityList());
-		return hogeResponse;
+	@GetMapping("/db_get")
+	public ResponseEntity<CheckDbPerformanceResponse> checkDbPerformance() {
+		CheckDbPerformanceResponse checkDbPerformanceResponse = new CheckDbPerformanceResponse();
+		CheckSelectPerformanceOutput checkSelectPerformanceOutput = hogeService.checkSelectPerformance();
+		checkDbPerformanceResponse.setHogeEntityList(checkSelectPerformanceOutput.getHogeEntityList());
+		checkDbPerformanceResponse.setBuildingEntityList(checkSelectPerformanceOutput.getBuildingEntityList());
+		checkDbPerformanceResponse.setRoomEntityList(checkSelectPerformanceOutput.getRoomEntityList());
+		return new ResponseEntity<>(checkDbPerformanceResponse, new HttpHeaders(), HttpStatus.OK);
 	} 
 	
-	@GetMapping("/get2")
-	public HogeResponse getHogeResponse2(@RequestParam("name") String name) {
-		System.out.println("1");
-		System.out.println(sampleConfig.getFuga());
-		HogeResponse hogeResponse = new HogeResponse();
-		HogeOutput hogeOutput = hogeService.getHoge();
-		hogeResponse.setHogeList(hogeOutput.getHogeEntityList());
-		return hogeResponse;
-	}
 }
