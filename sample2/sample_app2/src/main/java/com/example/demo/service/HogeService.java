@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.concurrent.ExecutionException;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
@@ -10,5 +12,7 @@ public interface HogeService {
 	public HogeOutput getHoge();
 	
 	public CheckSelectPerformanceOutput checkSelectPerformance();
+	
+	public CheckSelectPerformanceOutput checkSelectAsyncPerformance() throws InterruptedException, ExecutionException;
 	
 }

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,6 +51,16 @@ public class Sample2Controller {
 	public ResponseEntity<CheckDbPerformanceResponse> checkDbPerformance() {
 		CheckDbPerformanceResponse checkDbPerformanceResponse = new CheckDbPerformanceResponse();
 		CheckSelectPerformanceOutput checkSelectPerformanceOutput = hogeService.checkSelectPerformance();
+		checkDbPerformanceResponse.setHogeEntityList(checkSelectPerformanceOutput.getHogeEntityList());
+		checkDbPerformanceResponse.setBuildingEntityList(checkSelectPerformanceOutput.getBuildingEntityList());
+		checkDbPerformanceResponse.setRoomEntityList(checkSelectPerformanceOutput.getRoomEntityList());
+		return new ResponseEntity<>(checkDbPerformanceResponse, new HttpHeaders(), HttpStatus.OK);
+	} 
+	
+	@GetMapping("/db_get2")
+	public ResponseEntity<CheckDbPerformanceResponse> checkDbPerformance2() throws InterruptedException, ExecutionException {
+		CheckDbPerformanceResponse checkDbPerformanceResponse = new CheckDbPerformanceResponse();
+		CheckSelectPerformanceOutput checkSelectPerformanceOutput = hogeService.checkSelectAsyncPerformance();
 		checkDbPerformanceResponse.setHogeEntityList(checkSelectPerformanceOutput.getHogeEntityList());
 		checkDbPerformanceResponse.setBuildingEntityList(checkSelectPerformanceOutput.getBuildingEntityList());
 		checkDbPerformanceResponse.setRoomEntityList(checkSelectPerformanceOutput.getRoomEntityList());
