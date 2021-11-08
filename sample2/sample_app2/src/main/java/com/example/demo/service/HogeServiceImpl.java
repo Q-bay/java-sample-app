@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
+import com.example.demo.domain.model.CheckSelectPerformanceOutput2;
 import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.BuildingEntity;
 import com.example.demo.domain.model.entity.HogeEntity;
@@ -60,4 +61,29 @@ public class HogeServiceImpl implements HogeService{
 		System.out.println("elapsedTime: " + elapsedTime);
 		return new CheckSelectPerformanceOutput(hogeEntityList.get(), buildingEntityList.get(), roomEntityList.get());
 	}
+
+	// SQLで条件分岐あり
+	@Override
+	public CheckSelectPerformanceOutput2 checkSelectPerformance2() {
+		BuildingEntity buildingEntity = new BuildingEntity();
+		buildingEntity.setBuildingId("100002");
+//		System.out.println(buildingEntity.getBuildingName());
+		buildingEntity.setBuildingDetail("ohnuki building");
+		System.out.println("ppp1");
+		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings2(buildingEntity);
+		System.out.println("ppp2");
+		return new CheckSelectPerformanceOutput2(buildingEntityList);
+	}
+
+	// 取得した結果からロジックで分岐かける
+	@Override
+	public CheckSelectPerformanceOutput2 checkSelectPerformance3() {
+		
+		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings();
+		// ごにょごにょ
+		return new CheckSelectPerformanceOutput2(buildingEntityList);
+		
+	}
+	
+	
 }

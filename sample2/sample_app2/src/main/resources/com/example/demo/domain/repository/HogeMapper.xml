@@ -28,4 +28,24 @@
         FROM
             room
     </select>
+    
+    <select id="selectBuildings2" resultType="map" parameterType="com.example.demo.domain.model.entity.BuildingEntity">
+        SELECT
+			building_id,
+			building_name,
+			building_detail
+        FROM
+            building            
+        <where>
+            <if test="#{buildingId} != null">
+                building_id = #{buildingId}
+      		</if>
+            <if test="buildingName != null">
+                and building_name = #{buildingName}
+      		</if>
+      		<if test="buildingDetail != null">
+                and building_detail = #{buildingDetail}
+      		</if>
+        </where>
+    </select>
 </mapper>

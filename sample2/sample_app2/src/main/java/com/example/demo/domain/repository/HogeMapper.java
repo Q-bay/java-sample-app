@@ -18,4 +18,7 @@ public interface HogeMapper {
 	
 	public List<RoomEntity> selectRooms();
 	
+	public List<BuildingEntity> selectBuildings2(BuildingEntity buildingEntity);
+	
+	
 }
