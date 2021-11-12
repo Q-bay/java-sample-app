@@ -12,7 +12,7 @@
             hoge
     </select>
     
-    <select id="selectBuildings" resultType="map">
+    <select id="selectBuildings" resultType="com.example.demo.domain.model.entity.BuildingEntity">
         SELECT
 			building_id,
 			building_name,
@@ -29,7 +29,7 @@
             room
     </select>
     
-    <select id="selectBuildings2" resultType="map" parameterType="com.example.demo.domain.model.entity.BuildingEntity">
+    <select id="selectBuildings2" resultType="com.example.demo.domain.model.entity.BuildingEntity" parameterType="com.example.demo.domain.model.entity.BuildingEntity">
         SELECT
 			building_id,
 			building_name,

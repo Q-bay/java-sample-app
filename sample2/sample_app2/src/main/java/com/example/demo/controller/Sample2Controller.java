@@ -80,7 +80,9 @@ public class Sample2Controller {
 	@GetMapping("/db_get4")
 	public ResponseEntity<CheckDbPerformanceResponse2> checkDbPerformance4() throws InterruptedException, ExecutionException {
 		CheckDbPerformanceResponse2 checkDbPerformanceResponse2 = new CheckDbPerformanceResponse2();
+		System.out.println("unko1");
 		CheckSelectPerformanceOutput2 checkSelectPerformanceOutput2 = hogeService.checkSelectPerformance3();
+		System.out.println("unko2");
 		checkDbPerformanceResponse2.setBuildingEntityList(checkSelectPerformanceOutput2.getBuildingEntityList());
 		return new ResponseEntity<>(checkDbPerformanceResponse2, new HttpHeaders(), HttpStatus.OK);
 	}

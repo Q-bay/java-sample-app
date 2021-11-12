@@ -6,6 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -78,9 +79,18 @@ public class HogeServiceImpl implements HogeService{
 	// 取得した結果からロジックで分岐かける
 	@Override
 	public CheckSelectPerformanceOutput2 checkSelectPerformance3() {
+		System.out.println("aaa1");		
+		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings()
+				.parallelStream()
+				.filter(buildingEntity -> 
+					buildingEntity.getBuildingId().equals("100002")
+				)
+				.filter(buildingEntity -> 
+					buildingEntity.getBuildingDetail().equals("ohnuki building")
+				)
+				.collect(Collectors.toList());
 		
-		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings();
-		// ごにょごにょ
+		System.out.println("aaa2");
 		return new CheckSelectPerformanceOutput2(buildingEntityList);
 		
 	}
