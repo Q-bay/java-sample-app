@@ -1,16 +1,24 @@
 
+DROP TABLE hoge;
+
 CREATE TABLE hoge (
-    id character(6),
-    name character(32)
+    id varchar(6),
+    name varchar(32),
+    explanation character(128)
 );
 
+DROP TABLE building;
+
 CREATE TABLE building (
-  building_id varchar(16),
+  id varchar(6),
   building_name varchar(96), 
   building_detail varchar(255)
 );
 
+DROP TABLE room;
+
 CREATE TABLE room (
-  room_id varchar(16),
-  room_name varchar(30)
+  id varchar(16),
+  room_name varchar(30),
+  room_detail varchar(128)
 );
