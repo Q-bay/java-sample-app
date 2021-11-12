@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -18,8 +19,12 @@ import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.BuildingEntity;
 import com.example.demo.domain.model.entity.HogeEntity;
 import com.example.demo.domain.model.entity.RoomEntity;
+import com.example.demo.domain.repository.BuildingMapper;
+import com.example.demo.domain.repository.BuildingRepository;
 import com.example.demo.domain.repository.HogeMapper;
 import com.example.demo.domain.repository.HogeRepository;
+import com.example.demo.domain.repository.RoomMapper;
+import com.example.demo.domain.repository.RoomRepository;
 
 @Service
 @EnableAsync
@@ -29,7 +34,19 @@ public class HogeServiceImpl implements HogeService{
 	HogeMapper hogeMapper;
 	
 	@Autowired
+	BuildingMapper buildingMapper;
+	
+	@Autowired
+	RoomMapper roomMapper;
+	
+	@Autowired
 	HogeRepository hogeRepository; 
+	
+	@Autowired
+	BuildingRepository buildingRepository; 
+	
+	@Autowired
+	RoomRepository roomRepository; 
 	
 	public HogeOutput getHoge() {
 		return new HogeOutput(hogeMapper.selectHoge());
@@ -40,8 +57,8 @@ public class HogeServiceImpl implements HogeService{
 		long currentMills = System.currentTimeMillis();
 
 		List<HogeEntity> hogeEntityList = hogeMapper.selectHoge();
-		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings();
-		List<RoomEntity> roomEntityList = hogeMapper.selectRooms();
+		List<BuildingEntity> buildingEntityList = buildingMapper.selectBuildings();
+		List<RoomEntity> roomEntityList = roomMapper.selectRooms();
 		
 		long elapsedTime = System.currentTimeMillis() - currentMills;
 		System.out.println("elapsedTime: " + elapsedTime);
@@ -53,8 +70,8 @@ public class HogeServiceImpl implements HogeService{
 		long currentMills = System.currentTimeMillis();
 		
 		CompletableFuture<List<HogeEntity>> hogeEntityList = hogeRepository.selectHoge();
-		CompletableFuture<List<BuildingEntity>> buildingEntityList = hogeRepository.selectBuildings(); 
-		CompletableFuture<List<RoomEntity>> roomEntityList = hogeRepository.selectRooms();
+		CompletableFuture<List<BuildingEntity>> buildingEntityList = buildingRepository.selectBuildings(); 
+		CompletableFuture<List<RoomEntity>> roomEntityList = roomRepository.selectRooms();
 		
 		//　待ち受け
 		CompletableFuture.allOf(hogeEntityList, buildingEntityList, roomEntityList).join();
@@ -63,37 +80,17 @@ public class HogeServiceImpl implements HogeService{
 		return new CheckSelectPerformanceOutput(hogeEntityList.get(), buildingEntityList.get(), roomEntityList.get());
 	}
 
-	// SQLで条件分岐あり
-	@Override
-	public CheckSelectPerformanceOutput2 checkSelectPerformance2() {
-		BuildingEntity buildingEntity = new BuildingEntity();
-		buildingEntity.setBuildingId("100002");
-//		System.out.println(buildingEntity.getBuildingName());
-		buildingEntity.setBuildingDetail("ohnuki building");
-		System.out.println("ppp1");
-		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings2(buildingEntity);
-		System.out.println("ppp2");
-		return new CheckSelectPerformanceOutput2(buildingEntityList);
-	}
-
-	// 取得した結果からロジックで分岐かける
-	@Override
-	public CheckSelectPerformanceOutput2 checkSelectPerformance3() {
-		System.out.println("aaa1");		
-		List<BuildingEntity> buildingEntityList = hogeMapper.selectBuildings()
-				.parallelStream()
-				.filter(buildingEntity -> 
-					buildingEntity.getBuildingId().equals("100002")
-				)
-				.filter(buildingEntity -> 
-					buildingEntity.getBuildingDetail().equals("ohnuki building")
-				)
-				.collect(Collectors.toList());
-		
-		System.out.println("aaa2");
-		return new CheckSelectPerformanceOutput2(buildingEntityList);
-		
-	}
+//	// joinして取得
+//	@Override
+//	public CheckSelectPerformanceOutput2 checkSelectPerformance2() {
+//
+//	}
+//
+//	// LIMIT
+//	@Override
+//	public CheckSelectPerformanceOutput2 checkSelectPerformance3() {		
+//		
+//	}
 	
 	
 }

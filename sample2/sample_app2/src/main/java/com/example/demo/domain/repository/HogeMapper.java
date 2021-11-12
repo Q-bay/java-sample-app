@@ -14,11 +14,4 @@ public interface HogeMapper {
 	
 	public List<HogeEntity> selectHoge();
 	
-	public List<BuildingEntity> selectBuildings();
-	
-	public List<RoomEntity> selectRooms();
-	
-	public List<BuildingEntity> selectBuildings2(BuildingEntity buildingEntity);
-	
-	
 }

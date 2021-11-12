@@ -8,4 +8,6 @@ public class HogeEntity {
 	private String id;
 	
 	private String name;
+	
+	private String explanation; 
 }

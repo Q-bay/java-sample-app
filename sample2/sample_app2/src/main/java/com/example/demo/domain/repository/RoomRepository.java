@@ -13,16 +13,17 @@ import com.example.demo.domain.model.entity.HogeEntity;
 import com.example.demo.domain.model.entity.RoomEntity;
 
 @Repository
-public class HogeRepository {
+public class RoomRepository {
 
 	// 検証用として数秒待機する
 	
 	@Autowired
-	HogeMapper hogeMapper;
+	RoomMapper roomMapper;
 	
 	@Async
-	public CompletableFuture<List<HogeEntity>> selectHoge() throws InterruptedException {
+	public CompletableFuture<List<RoomEntity>> selectRooms() throws InterruptedException {
 		Thread.sleep(2000);
-		return CompletableFuture.completedFuture(hogeMapper.selectHoge());
+		return CompletableFuture.completedFuture(roomMapper.selectRooms());
 	}
+
 }

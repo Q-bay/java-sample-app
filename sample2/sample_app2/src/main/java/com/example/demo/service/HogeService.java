@@ -16,7 +16,4 @@ public interface HogeService {
 	
 	public CheckSelectPerformanceOutput checkSelectAsyncPerformance() throws InterruptedException, ExecutionException;
 	
-	public CheckSelectPerformanceOutput2 checkSelectPerformance2();
-	
-	public CheckSelectPerformanceOutput2 checkSelectPerformance3();
 }
