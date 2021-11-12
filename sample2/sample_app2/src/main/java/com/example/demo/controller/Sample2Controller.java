@@ -20,8 +20,9 @@ import com.example.demo.config.SampleConfig;
 import com.example.demo.domain.CheckDbPerformanceResponse;
 import com.example.demo.domain.CheckDbPerformanceResponse2;
 import com.example.demo.domain.HogeResponse;
+import com.example.demo.domain.JoinedResponse;
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
-import com.example.demo.domain.model.CheckSelectPerformanceOutput2;
+import com.example.demo.domain.model.GetLeftJoinOutput;
 import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.HogeEntity;
 import com.example.demo.service.HogeService;
@@ -72,5 +73,12 @@ public class Sample2Controller {
 		return new ResponseEntity<>(checkDbPerformanceResponse, new HttpHeaders(), HttpStatus.OK);
 	} 
 	
+	@GetMapping("/db_left_join")
+	public ResponseEntity<JoinedResponse> getLeftJoin() throws InterruptedException, ExecutionException {
+		JoinedResponse joinedResponse = new JoinedResponse();
+		GetLeftJoinOutput getLeftJoinOutput = hogeService.getLeftJoin();
+		joinedResponse.setJoinedEntityList(getLeftJoinOutput.getJoinedEntityList());
+		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
+	} 
 
 }

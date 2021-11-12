@@ -7,11 +7,23 @@
     
     <select id="selectLeftJoin" resultType="com.example.demo.domain.model.entity.JoinedEntity">
         SELECT
-			id,
-			building_name,
-			building_detail
+			A.id,
+			A.name,
+			A.explanation,
+			B.building_name,
+			B.building_detail,
+			C.room_name,
+			C.room_detail
         FROM
-            building
+            hoge A
+        LEFT JOIN 
+        	building B
+        ON 
+        	A.id = B.id
+        LEFT JOIN
+        	room C
+        ON
+        	A.id = C.id
     </select>
     
 </mapper>

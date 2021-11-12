@@ -14,15 +14,17 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
-import com.example.demo.domain.model.CheckSelectPerformanceOutput2;
+import com.example.demo.domain.model.GetLeftJoinOutput;
 import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.BuildingEntity;
 import com.example.demo.domain.model.entity.HogeEntity;
+import com.example.demo.domain.model.entity.JoinedEntity;
 import com.example.demo.domain.model.entity.RoomEntity;
 import com.example.demo.domain.repository.BuildingMapper;
 import com.example.demo.domain.repository.BuildingRepository;
 import com.example.demo.domain.repository.HogeMapper;
 import com.example.demo.domain.repository.HogeRepository;
+import com.example.demo.domain.repository.JoinedMapper;
 import com.example.demo.domain.repository.RoomMapper;
 import com.example.demo.domain.repository.RoomRepository;
 
@@ -40,8 +42,11 @@ public class HogeServiceImpl implements HogeService{
 	RoomMapper roomMapper;
 	
 	@Autowired
+	JoinedMapper joinedMapper; 
+
+	@Autowired
 	HogeRepository hogeRepository; 
-	
+		
 	@Autowired
 	BuildingRepository buildingRepository; 
 	
@@ -80,11 +85,14 @@ public class HogeServiceImpl implements HogeService{
 		return new CheckSelectPerformanceOutput(hogeEntityList.get(), buildingEntityList.get(), roomEntityList.get());
 	}
 
-//	// joinして取得
-//	@Override
-//	public CheckSelectPerformanceOutput2 checkSelectPerformance2() {
-//
-//	}
+	// joinして取得
+	@Override
+	public GetLeftJoinOutput getLeftJoin() {
+		GetLeftJoinOutput getLeftJoinOutput = new GetLeftJoinOutput();
+		List<JoinedEntity> joinedEntityList = joinedMapper.selectLeftJoin();
+		getLeftJoinOutput.setJoinedEntityList(joinedEntityList);
+		return getLeftJoinOutput;
+	}
 //
 //	// LIMIT
 //	@Override

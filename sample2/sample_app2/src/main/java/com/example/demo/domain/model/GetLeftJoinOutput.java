@@ -4,15 +4,18 @@ import java.util.List;
 
 import com.example.demo.domain.model.entity.BuildingEntity;
 import com.example.demo.domain.model.entity.HogeEntity;
+import com.example.demo.domain.model.entity.JoinedEntity;
 import com.example.demo.domain.model.entity.RoomEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
-public class CheckSelectPerformanceOutput2 {
+@NoArgsConstructor
+public class GetLeftJoinOutput {
 
-	private List<BuildingEntity> buildingEntityList;
+	private List<JoinedEntity> joinedEntityList;
 	
 }
