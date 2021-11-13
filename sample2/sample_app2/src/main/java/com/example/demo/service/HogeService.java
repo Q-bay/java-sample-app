@@ -17,5 +17,7 @@ public interface HogeService {
 	public CheckSelectPerformanceOutput checkSelectAsyncPerformance() throws InterruptedException, ExecutionException;
 
 	public GetLeftJoinOutput getLeftJoin();
+
+	public GetLeftJoinOutput logicJoin();
 	
 }

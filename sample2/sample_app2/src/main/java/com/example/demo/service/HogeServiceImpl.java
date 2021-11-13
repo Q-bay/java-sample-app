@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.JoinedResponse;
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
 import com.example.demo.domain.model.GetLeftJoinOutput;
 import com.example.demo.domain.model.HogeOutput;
@@ -93,12 +94,47 @@ public class HogeServiceImpl implements HogeService{
 		getLeftJoinOutput.setJoinedEntityList(joinedEntityList);
 		return getLeftJoinOutput;
 	}
-//
-//	// LIMIT
-//	@Override
-//	public CheckSelectPerformanceOutput2 checkSelectPerformance3() {		
-//		
-//	}
+
+	// joinして取得ではなくロジックで頑張る
+	@Override
+	public GetLeftJoinOutput logicJoin() {		
+		GetLeftJoinOutput getLeftJoinOutput = new GetLeftJoinOutput();
+		
+		List<HogeEntity> hogeEntityList = hogeMapper.selectHoge();
+		List<BuildingEntity> buildingEntityList = buildingMapper.selectBuildings();
+		List<RoomEntity> roomEntityList = roomMapper.selectRooms();		
+		
+		List<JoinedEntity> joinedEntityList = new ArrayList<>(); 
+				
+		hogeEntityList.parallelStream()
+			.forEach(hogeEntity -> {
+				JoinedEntity joinedEntity = new JoinedEntity();
+				
+				joinedEntity.setId(hogeEntity.getId());
+				joinedEntity.setName(hogeEntity.getName());
+				joinedEntity.setExplanation(hogeEntity.getExplanation());
+				
+				buildingEntityList.parallelStream()
+					.filter(buildingEntity -> buildingEntity.getId().equals(hogeEntity.getId()))
+					.forEach(buildingEntity -> {
+						joinedEntity.setBuildingName(buildingEntity.getBuildingName());
+						joinedEntity.setBuildingDetail(buildingEntity.getBuildingDetail());
+					});
+				
+				roomEntityList.parallelStream()
+					.filter(roomEntity -> roomEntity.getId().equals(hogeEntity.getId()))
+					.forEach(roomEntity -> {
+						joinedEntity.setRoomName(roomEntity.getRoomName());
+						joinedEntity.setRoomDetail(roomEntity.getRoomDetail());
+				});
+				
+				joinedEntityList.add(joinedEntity);
+			});
+		
+			getLeftJoinOutput.setJoinedEntityList(joinedEntityList);
+			
+			return getLeftJoinOutput;
+	}
 	
 	
 }

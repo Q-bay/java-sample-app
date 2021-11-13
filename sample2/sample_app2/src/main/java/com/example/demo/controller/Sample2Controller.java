@@ -80,5 +80,13 @@ public class Sample2Controller {
 		joinedResponse.setJoinedEntityList(getLeftJoinOutput.getJoinedEntityList());
 		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
 	} 
+	
+	@GetMapping("/db_logic_join")
+	public ResponseEntity<JoinedResponse> getLogicJoin() throws InterruptedException, ExecutionException {
+		JoinedResponse joinedResponse = new JoinedResponse();
+		GetLeftJoinOutput getLeftJoinOutput = hogeService.logicJoin();
+		joinedResponse.setJoinedEntityList(getLeftJoinOutput.getJoinedEntityList());
+		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
+	} 
 
 }
