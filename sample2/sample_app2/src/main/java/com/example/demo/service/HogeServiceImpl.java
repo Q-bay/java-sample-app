@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -105,32 +106,36 @@ public class HogeServiceImpl implements HogeService{
 		List<BuildingEntity> buildingEntityList = buildingMapper.selectBuildings();
 		List<RoomEntity> roomEntityList = roomMapper.selectRooms();		
 		
-		List<JoinedEntity> joinedEntityList = new ArrayList<>(); 
-				
-		hogeEntityList.parallelStream()
-			.forEach(hogeEntity -> {
-				JoinedEntity joinedEntity = new JoinedEntity();
-				
-				joinedEntity.setId(hogeEntity.getId());
-				joinedEntity.setName(hogeEntity.getName());
-				joinedEntity.setExplanation(hogeEntity.getExplanation());
-				
-				buildingEntityList.parallelStream()
-					.filter(buildingEntity -> buildingEntity.getId().equals(hogeEntity.getId()))
-					.forEach(buildingEntity -> {
+		List<JoinedEntity> joinedEntityList = 
+				hogeEntityList.stream()
+				.map(hogeEntity -> {
+					JoinedEntity joinedEntity = new JoinedEntity();
+					joinedEntity.setId(hogeEntity.getId());
+					joinedEntity.setName(hogeEntity.getName());
+					joinedEntity.setExplanation(hogeEntity.getExplanation());
+					return joinedEntity;
+				})
+				.map(joinedEntity -> {
+					buildingEntityList.stream()
+					.filter(buildingEntity -> joinedEntity.getId().equals(buildingEntity.getId()))
+					.peek(buildingEntity -> {
 						joinedEntity.setBuildingName(buildingEntity.getBuildingName());
-						joinedEntity.setBuildingDetail(buildingEntity.getBuildingDetail());
-					});
-				
-				roomEntityList.parallelStream()
-					.filter(roomEntity -> roomEntity.getId().equals(hogeEntity.getId()))
-					.forEach(roomEntity -> {
+						joinedEntity.setBuildingDetail(buildingEntity.getBuildingDetail());						
+					})
+					.collect(Collectors.toList());
+					return joinedEntity;
+				})
+				.map(joinedEntity -> {
+					roomEntityList.stream()
+					.filter(roomEntity -> joinedEntity.getId().equals(roomEntity.getId()))
+					.peek(roomEntity -> {
 						joinedEntity.setRoomName(roomEntity.getRoomName());
 						joinedEntity.setRoomDetail(roomEntity.getRoomDetail());
-				});
-
-				joinedEntityList.add(joinedEntity);
-			});
+					})
+					.collect(Collectors.toList());
+					return joinedEntity;
+				})
+				.collect(Collectors.toList());
 		
 			getLeftJoinOutput.setJoinedEntityList(joinedEntityList);
 			
@@ -146,50 +151,43 @@ public class HogeServiceImpl implements HogeService{
 		List<HogeEntity> hogeEntityList = hogeMapper.selectHoge();
 		List<BuildingEntity> buildingEntityList = buildingMapper.selectBuildings();
 		List<RoomEntity> roomEntityList = roomMapper.selectRooms();		
-		
-		List<String> testList = Arrays.asList("a", "b", "c", "d", "e");
-		testList.stream().peek(str -> System.out.println(str));
-		
-		List<JoinedEntity> joinedEntityList1 =
-			hogeEntityList.stream()
+				
+		List<JoinedEntity> joinedEntityList = 
+				hogeEntityList.stream()
 				.map(hogeEntity -> {
-					
 					JoinedEntity joinedEntity = new JoinedEntity();
-					
-					//buildingEntityList.forEach(a -> System.out.println(a.getBuildingName()));
-					System.out.println("a");
-					buildingEntityList
-						.stream()
-						.peek(buildingEntity -> 
-							System.out.println(buildingEntity.getBuildingDetail())
-						)
-						.filter(buildingEntity -> buildingEntity.getId().equals(hogeEntity.getId()))
-						
-						.peek(buildingEntity -> roomEntityList
-								.stream()
-								.filter(roomEntity -> roomEntity.getId().equals(hogeEntity.getId()))
-								.peek(roomEntity -> {
-									System.out.println("aaa: " + roomEntity.getRoomName());
-									joinedEntity.setId(hogeEntity.getId());
-									joinedEntity.setName(hogeEntity.getName());
-									joinedEntity.setExplanation(hogeEntity.getExplanation());
-									joinedEntity.setBuildingName(buildingEntity.getBuildingName());
-									joinedEntity.setBuildingDetail(buildingEntity.getBuildingDetail());
-									joinedEntity.setRoomName(roomEntity.getRoomName());
-									joinedEntity.setRoomDetail(roomEntity.getRoomDetail());
-								}));
-					
-					return joinedEntity;		
-								
-					
-				}).collect(Collectors.toList());
-		
-
+					joinedEntity.setId(hogeEntity.getId());
+					joinedEntity.setName(hogeEntity.getName());
+					joinedEntity.setExplanation(hogeEntity.getExplanation());
+					return joinedEntity;
+				})
+				.map(joinedEntity -> {
+					buildingEntityList.stream()
+					.filter(buildingEntity -> joinedEntity.getId().equals(buildingEntity.getId()))
+					.peek(buildingEntity -> {
+						joinedEntity.setBuildingName(buildingEntity.getBuildingName());
+						joinedEntity.setBuildingDetail(buildingEntity.getBuildingDetail());						
+					})
+					.collect(Collectors.toList());
+					return joinedEntity;
+				})
+				.filter(joinedEntity -> !Objects.isNull(joinedEntity.getBuildingName()))
+				.map(joinedEntity -> {
+					roomEntityList.stream()
+					.filter(roomEntity -> joinedEntity.getId().equals(roomEntity.getId()))
+					.peek(roomEntity -> {
+						joinedEntity.setRoomName(roomEntity.getRoomName());
+						joinedEntity.setRoomDetail(roomEntity.getRoomDetail());
+					})
+					.collect(Collectors.toList());
+					return joinedEntity;
+				})
+				.filter(joinedEntity -> !Objects.isNull(joinedEntity.getRoomName()))
+				.collect(Collectors.toList());
 			
 		
-			getInnerJoinOutput.setJoinedEntityList(joinedEntityList1);
+			getInnerJoinOutput.setJoinedEntityList(joinedEntityList);
 			
 			return getInnerJoinOutput;
 	}
-
 }

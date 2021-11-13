@@ -5,19 +5,22 @@ import java.util.concurrent.ExecutionException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
+import com.example.demo.domain.model.GetInnerJoinOutput;
 import com.example.demo.domain.model.GetLeftJoinOutput;
 import com.example.demo.domain.model.HogeOutput;
 
 public interface HogeService {
 
-	public HogeOutput getHoge();
+	HogeOutput getHoge();
 	
-	public CheckSelectPerformanceOutput checkSelectPerformance();
+	CheckSelectPerformanceOutput checkSelectPerformance();
 	
-	public CheckSelectPerformanceOutput checkSelectAsyncPerformance() throws InterruptedException, ExecutionException;
+	CheckSelectPerformanceOutput checkSelectAsyncPerformance() throws InterruptedException, ExecutionException;
 
-	public GetLeftJoinOutput getLeftJoin();
+	GetLeftJoinOutput getLeftJoin();
 
-	public GetLeftJoinOutput logicJoin();
+	GetLeftJoinOutput logicLeftJoin();
+
+	GetInnerJoinOutput logicInnerJoin();
 	
 }

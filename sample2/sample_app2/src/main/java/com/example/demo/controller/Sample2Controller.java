@@ -22,6 +22,7 @@ import com.example.demo.domain.CheckDbPerformanceResponse2;
 import com.example.demo.domain.HogeResponse;
 import com.example.demo.domain.JoinedResponse;
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
+import com.example.demo.domain.model.GetInnerJoinOutput;
 import com.example.demo.domain.model.GetLeftJoinOutput;
 import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.HogeEntity;
@@ -81,11 +82,19 @@ public class Sample2Controller {
 		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
 	} 
 	
-	@GetMapping("/db_logic_join")
-	public ResponseEntity<JoinedResponse> getLogicJoin() throws InterruptedException, ExecutionException {
+	@GetMapping("/db_logic_left_join")
+	public ResponseEntity<JoinedResponse> getLogicLeftJoin() throws InterruptedException, ExecutionException {
 		JoinedResponse joinedResponse = new JoinedResponse();
-		GetLeftJoinOutput getLeftJoinOutput = hogeService.logicJoin();
+		GetLeftJoinOutput getLeftJoinOutput = hogeService.logicLeftJoin();
 		joinedResponse.setJoinedEntityList(getLeftJoinOutput.getJoinedEntityList());
+		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
+	} 
+	
+	@GetMapping("/db_logic_inner_join")
+	public ResponseEntity<JoinedResponse> getLogicInnerJoin() throws InterruptedException, ExecutionException {
+		JoinedResponse joinedResponse = new JoinedResponse();
+		GetInnerJoinOutput getInnerJoinOutput = hogeService.logicInnerJoin();
+		joinedResponse.setJoinedEntityList(getInnerJoinOutput.getJoinedEntityList());
 		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
 	} 
 

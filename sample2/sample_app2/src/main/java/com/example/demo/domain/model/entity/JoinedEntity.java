@@ -1,8 +1,10 @@
 package com.example.demo.domain.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class JoinedEntity {
 
 	private String id;
