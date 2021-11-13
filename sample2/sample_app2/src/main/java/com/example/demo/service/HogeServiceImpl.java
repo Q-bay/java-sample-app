@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.JoinedResponse;
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
+import com.example.demo.domain.model.GetInnerJoinOutput;
 import com.example.demo.domain.model.GetLeftJoinOutput;
 import com.example.demo.domain.model.HogeOutput;
 import com.example.demo.domain.model.entity.BuildingEntity;
@@ -86,7 +87,7 @@ public class HogeServiceImpl implements HogeService{
 		return new CheckSelectPerformanceOutput(hogeEntityList.get(), buildingEntityList.get(), roomEntityList.get());
 	}
 
-	// joinして取得
+	// LeftJoinして取得
 	@Override
 	public GetLeftJoinOutput getLeftJoin() {
 		GetLeftJoinOutput getLeftJoinOutput = new GetLeftJoinOutput();
@@ -97,7 +98,7 @@ public class HogeServiceImpl implements HogeService{
 
 	// joinして取得ではなくロジックで頑張る
 	@Override
-	public GetLeftJoinOutput logicJoin() {		
+	public GetLeftJoinOutput logicLeftJoin() {		
 		GetLeftJoinOutput getLeftJoinOutput = new GetLeftJoinOutput();
 		
 		List<HogeEntity> hogeEntityList = hogeMapper.selectHoge();
@@ -127,7 +128,7 @@ public class HogeServiceImpl implements HogeService{
 						joinedEntity.setRoomName(roomEntity.getRoomName());
 						joinedEntity.setRoomDetail(roomEntity.getRoomDetail());
 				});
-				
+
 				joinedEntityList.add(joinedEntity);
 			});
 		
@@ -136,5 +137,59 @@ public class HogeServiceImpl implements HogeService{
 			return getLeftJoinOutput;
 	}
 	
-	
+
+	// joinして取得ではなくロジックで頑張る
+	@Override
+	public GetInnerJoinOutput logicInnerJoin() {		
+		GetInnerJoinOutput getInnerJoinOutput = new GetInnerJoinOutput();
+		
+		List<HogeEntity> hogeEntityList = hogeMapper.selectHoge();
+		List<BuildingEntity> buildingEntityList = buildingMapper.selectBuildings();
+		List<RoomEntity> roomEntityList = roomMapper.selectRooms();		
+		
+		List<String> testList = Arrays.asList("a", "b", "c", "d", "e");
+		testList.stream().peek(str -> System.out.println(str));
+		
+		List<JoinedEntity> joinedEntityList1 =
+			hogeEntityList.stream()
+				.map(hogeEntity -> {
+					
+					JoinedEntity joinedEntity = new JoinedEntity();
+					
+					//buildingEntityList.forEach(a -> System.out.println(a.getBuildingName()));
+					System.out.println("a");
+					buildingEntityList
+						.stream()
+						.peek(buildingEntity -> 
+							System.out.println(buildingEntity.getBuildingDetail())
+						)
+						.filter(buildingEntity -> buildingEntity.getId().equals(hogeEntity.getId()))
+						
+						.peek(buildingEntity -> roomEntityList
+								.stream()
+								.filter(roomEntity -> roomEntity.getId().equals(hogeEntity.getId()))
+								.peek(roomEntity -> {
+									System.out.println("aaa: " + roomEntity.getRoomName());
+									joinedEntity.setId(hogeEntity.getId());
+									joinedEntity.setName(hogeEntity.getName());
+									joinedEntity.setExplanation(hogeEntity.getExplanation());
+									joinedEntity.setBuildingName(buildingEntity.getBuildingName());
+									joinedEntity.setBuildingDetail(buildingEntity.getBuildingDetail());
+									joinedEntity.setRoomName(roomEntity.getRoomName());
+									joinedEntity.setRoomDetail(roomEntity.getRoomDetail());
+								}));
+					
+					return joinedEntity;		
+								
+					
+				}).collect(Collectors.toList());
+		
+
+			
+		
+			getInnerJoinOutput.setJoinedEntityList(joinedEntityList1);
+			
+			return getInnerJoinOutput;
+	}
+
 }
