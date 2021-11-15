@@ -11,7 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,8 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.config.SampleConfig;
 import com.example.demo.domain.CheckDbPerformanceResponse;
 import com.example.demo.domain.CheckDbPerformanceResponse2;
+import com.example.demo.domain.GroupOrder;
 import com.example.demo.domain.HogeResponse;
 import com.example.demo.domain.JoinedResponse;
+import com.example.demo.domain.PostRequest;
+import com.example.demo.domain.PostResponse;
 import com.example.demo.domain.model.CheckSelectPerformanceOutput;
 import com.example.demo.domain.model.GetInnerJoinOutput;
 import com.example.demo.domain.model.GetLeftJoinOutput;
@@ -97,5 +105,24 @@ public class Sample2Controller {
 		joinedResponse.setJoinedEntityList(getInnerJoinOutput.getJoinedEntityList());
 		return new ResponseEntity<>(joinedResponse, new HttpHeaders(), HttpStatus.OK);
 	} 
+	
+	@PostMapping("/post")
+	public ResponseEntity<PostResponse> postSample(
+			@RequestBody @Validated PostRequest postRequest, 
+			BindingResult bindingResult){
+
+		PostResponse postResponse = new PostResponse();
+		
+        if (bindingResult.hasErrors()) {
+        	List<String> errorList = new ArrayList<String>();
+            for (ObjectError error : bindingResult.getAllErrors()) {
+                errorList.add(error.getDefaultMessage());
+            }
+        	postResponse.setMessage(errorList);
+        }
+
+		return new ResponseEntity<>(postResponse, new HttpHeaders(), HttpStatus.OK);
+		
+	}
 
 }
