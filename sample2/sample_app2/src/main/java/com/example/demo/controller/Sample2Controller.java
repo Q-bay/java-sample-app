@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.config.SampleConfig;
 import com.example.demo.domain.CheckDbPerformanceResponse;
 import com.example.demo.domain.CheckDbPerformanceResponse2;
-import com.example.demo.domain.GroupOrder;
 import com.example.demo.domain.HogeResponse;
 import com.example.demo.domain.JoinedResponse;
 import com.example.demo.domain.PostRequest;
