@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/
+    username: postgres
+    password: Quality0610
+  jpa:
+    database: POSTGRESQL
+mybatis:
+  configuration: 
+    map-underscore-to-camel-case: true
+hoge:
+  fuga: hogemeru
