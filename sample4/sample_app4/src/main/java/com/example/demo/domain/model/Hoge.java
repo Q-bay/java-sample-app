@@ -7,7 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class Hoge {
 
-	private Integer id;
+	private String id;
 	
 	private String name;
+	
+	private String explanation;
 }
