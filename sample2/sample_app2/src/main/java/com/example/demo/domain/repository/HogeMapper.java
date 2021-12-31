@@ -12,6 +12,6 @@ import com.example.demo.domain.model.entity.RoomEntity;
 @Mapper
 public interface HogeMapper {
 	
-	public List<HogeEntity> selectHoge();
+	List<HogeEntity> selectHoge();
 	
 }

@@ -10,6 +10,6 @@ import com.example.demo.domain.model.entity.JoinedEntity;
 @Mapper
 public interface JoinedMapper {
 	
-	public List<JoinedEntity> selectLeftJoin();
+	List<JoinedEntity> selectLeftJoin();
 
 }

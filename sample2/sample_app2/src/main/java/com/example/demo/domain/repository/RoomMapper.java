@@ -8,5 +8,5 @@ import com.example.demo.domain.model.entity.RoomEntity;
 
 @Mapper
 public interface RoomMapper {
-	public List<RoomEntity> selectRooms();
+	List<RoomEntity> selectRooms();
 }

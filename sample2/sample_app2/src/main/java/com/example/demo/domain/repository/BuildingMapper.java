@@ -9,6 +9,6 @@ import com.example.demo.domain.model.entity.BuildingEntity;
 @Mapper
 public interface BuildingMapper {
 	
-	public List<BuildingEntity> selectBuildings();
+	List<BuildingEntity> selectBuildings();
 
 }
