@@ -17,10 +17,11 @@ docker-compose up
 ## sample2
 Mybatisの練習とか、非同期の練習とか、お試しで書いているAPI
 これからも追記予定
-
-## sample3
-一般的な登録のAPI、できるだけオブジェクト指向を意識してみたい
-気長に作成中
+http://localhost:8080/swagger-ui/index.html#/sample-2-controller/
 
 ## sample4
 GKEにデプロイの検証をするためのモジュール、あくまで簡易なAPI
+http://localhost:8080/swagger-ui/index.html#/sample-4-controller/
+
+## sample5
+SpringSecurity練習用
