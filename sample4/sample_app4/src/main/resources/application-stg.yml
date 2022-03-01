@@ -1,10 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/
+    url: jdbc:postgresql://10.46.224.3:5432/postgres
     username: postgres
     password: Quality0610
-  jpa:
-    database: POSTGRESQL
 mybatis:
   configuration: 
     map-underscore-to-camel-case: true
