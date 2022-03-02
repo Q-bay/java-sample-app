@@ -1,10 +1,15 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/
+    url: jdbc:postgresql://db:5432/test_db
     username: postgres
-    password: Quality0610
+    password: postgres
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database: POSTGRESQL
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
 mybatis:
   configuration: 
     map-underscore-to-camel-case: true

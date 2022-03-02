@@ -1,0 +1,1 @@
+INSERT INTO hoge (name) values ('ochi');
