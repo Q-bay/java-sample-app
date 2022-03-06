@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.domain.model.AppUserDetails;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -17,7 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 public class HomeController {
 
     @GetMapping("/home")
-    public String getHome(Model model, @AuthenticationPrincipal User user) {
+    public String getHome(Model model,
+            @AuthenticationPrincipal AppUserDetails user) {
 
         log.info("HomeController Start");
 
@@ -37,11 +40,11 @@ public class HomeController {
 
         //ログインユーザー情報の取得(その1)
         Authentication authentication = (Authentication) principal;
-        User user1 = (User) authentication.getPrincipal();
+        AppUserDetails user1 = (AppUserDetails) authentication.getPrincipal();
         log.info("user1: " + user1.toString());
 
         //ログインユーザー情報の取得(その2)
-        User user2 = (User) SecurityContextHolder
+        AppUserDetails user2 = (AppUserDetails) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();

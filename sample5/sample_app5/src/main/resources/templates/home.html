@@ -9,7 +9,12 @@
     <h1>Home</h1>
     <!-- ユーザー情報 -->
     <p>ユーザーID：<span sec:authentication="name"></span></p>
+    <p>principal.userId：<span sec:authentication="principal.userId"></span></p>
+    <p>principal.username：<span sec:authentication="principal.username"></span></p>
+    <p>ユーザー名：<span sec:authentication="principal.appUserName"></span></p>
+    <p>メール：<span sec:authentication="principal.mailAddress"></span></p>
     <p>ロール:<span sec:authentication="principal.authorities"></span></p>
+
     <!-- ログアウト -->
     <form method="post" th:action="@{/logout}">
       <button type="submit">ログアウト</button>
